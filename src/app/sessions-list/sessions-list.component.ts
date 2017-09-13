@@ -21,15 +21,13 @@ export class SessionsListComponent implements OnInit {
 
   constructor(private sessionService: SessionService) { }
 
-  getSession(): void {
+  getSessions(): void {
     this.sessionService.getSessions().then(sessions => {
       this.sessions = sessions});
   }
 
-
-
   ngOnInit() {
-    this.getSession();
+    this.getSessions();
   }
 
 }

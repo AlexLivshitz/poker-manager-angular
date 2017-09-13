@@ -12,7 +12,6 @@ import {SessionService} from "../session.service";
 </div>
 
 `,
-  styleUrls: ['./session-details.component.css'],
   providers: [SessionService]
 })
 export class SessionDetailsComponent implements OnInit {
