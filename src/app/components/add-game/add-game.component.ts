@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Session} from "../session";
-import {SessionService} from "../session.service";
+import {Game} from "../../models/game";
+import { GameService, GamesService } from "../../services/game.service";
 
 @Component({
-  selector: 'add-session',
+  selector: 'add-game',
   template: `
 <div class="add-session">
   <button class="accordion" [ngClass]="{active: showDetails}" (click)="switchDetailsState()">Add Session</button>
@@ -15,16 +15,16 @@ import {SessionService} from "../session.service";
   </div>    
 </div>
 `,
-  styleUrls: ['./add-session.component.css'],
-  providers: [SessionService]
+  styleUrls: [ './add-game.component.css'],
+  providers: [GameService]
 })
 export class AddSessionComponent implements OnInit {
 
   private showDetails: boolean = false;
-  private session: Session;
+  private session: Game;
 
-  constructor(private sessionService: SessionService) {
-    this.session = new Session();
+  constructor(private sessionService: GameService, private gamesService: GamesService) {
+    this.session = new Game();
   }
 
   switchDetailsState(): void {
@@ -32,7 +32,8 @@ export class AddSessionComponent implements OnInit {
   }
 
   addSession() : void {
-    this.sessionService.addSession(this.session);
+    //this.sessionService.addSession(this.session);
+    this.gamesService.addGame(this.session);
   }
 
   ngOnInit() {
