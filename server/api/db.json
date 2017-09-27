@@ -1,0 +1,23 @@
+{
+  "gamesList": [
+    {
+      "id": 1,
+      "location": "temp location1",
+      "buyIn": 51,
+      "prize": 300
+    },
+    {
+      "id": 2,
+      "location": "temp location1",
+      "buyIn": 100,
+      "prize": 400
+    },
+    {
+      "id": 3,
+      "location": "temp location1",
+      "buyIn": 100,
+      "prize": 500
+    }
+
+  ]
+}

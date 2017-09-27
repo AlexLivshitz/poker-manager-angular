@@ -5,20 +5,20 @@ import { GameService, GamesService } from "../../services/game.service";
 @Component({
   selector: 'add-game',
   template: `
-<div class="add-session">
-  <button class="accordion" [ngClass]="{active: showDetails}" (click)="switchDetailsState()">Add Session</button>
-  <div class="panel" [ngClass]="{hidden: !showDetails}" >  
-    <input type="text" [(ngModel)]="session.location" placeholder="Location">
-    <input type="number" [(ngModel)]="session.buyIn" placeholder="Buy In">
-    <input type="number" [(ngModel)]="session.prize" placeholder="Prize">    
-    <button (click)="addSession()">ADD</button>
-  </div>    
-</div>
-`,
+      <div class="add-game">
+          <button class="accordion" [ngClass]="{active: showDetails}" (click)="switchDetailsState()">Add Session</button>
+          <div class="panel" [ngClass]="{hidden: !showDetails}">
+              <input type="text" [(ngModel)]="session.location" placeholder="Location">
+              <input type="number" [(ngModel)]="session.buyIn" placeholder="Buy In">
+              <input type="number" [(ngModel)]="session.prize" placeholder="Prize">
+              <button (click)="addSession()">ADD</button>
+          </div>
+      </div>
+  `,
   styleUrls: [ './add-game.component.css'],
   providers: [GameService]
 })
-export class AddSessionComponent implements OnInit {
+export class AddGameComponent implements OnInit {
 
   private showDetails: boolean = false;
   private session: Game;
@@ -33,7 +33,7 @@ export class AddSessionComponent implements OnInit {
 
   addSession() : void {
     //this.sessionService.addSession(this.session);
-    this.gamesService.addGame(this.session);
+    this.gamesService.addGame(Object.assign({}, this.session));
   }
 
   ngOnInit() {

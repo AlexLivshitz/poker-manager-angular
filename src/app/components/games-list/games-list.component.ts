@@ -3,12 +3,12 @@ import { GameService, GamesService } from "../../services/game.service";
 import { Game } from "../../models/game";
 import { Observable } from "rxjs/Observable";
 import { Store } from "@ngrx/store";
-import { AppStore } from "../../models/app-store";
+import { AppState } from "../../models/app-state";
 
 @Component({
   selector: 'games-list',
   template: `
-      <div class="sessions-list">
+      <div>
           <!--<add-session></add-session>-->
           <ul>
               <!--<session-item  *ngFor="let session of sessions" [session] = session></session-item>   -->
@@ -35,7 +35,7 @@ export class GamesListComponent implements OnInit {
   selectedGame$: Observable<Game>;
 
 
-  constructor(private sessionService: GameService, private store: Store<AppStore>) {
+  constructor(private sessionService: GameService, private store: Store<AppState>) {
     // this.selectedGame$ = store.select("selectedGame");
   }
 
