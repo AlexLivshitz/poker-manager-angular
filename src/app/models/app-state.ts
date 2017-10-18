@@ -1,6 +1,9 @@
 import { Game } from "./game";
+import { GamesListState } from "./games-list.state";
 
 export interface AppState {
-	gamesList: Game[];
-	selectedGame: Game;
+	gamesListState: GamesListState
+	// gamesList: Game[];
+	// selectedGame: Game;
 }
+

@@ -1,41 +1,55 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import {Game} from "../../models/game";
-import {GameService} from "../../services/game.service";
 
 @Component({
-  selector: 'session-details',
+  selector: 'game-details',
   template: `
-<div>
-    <!--<div class="panel" >-->
-        <!--{{session.location}} <button (click)="deleteSession(session)">Delete</button>-->
-    <!--</div>      -->
-    <div class="panel" >
-        {{session.location}} <button (click)="deleteSession(session)">Delete</button>
-    </div>    
-</div>
+      <div>
+          <div class="panel" >
+              <div *ngIf="!isUpdateMode">
+                  {{game.location}}  {{game.buyIn}} {{game.prize}}
+                  <br/>
+                  <button (click)="isUpdateMode=true">Update</button>
+                  <button (click)="deleted.emit(game)">Delete</button>
+              </div>
+              <div *ngIf="isUpdateMode">
+                  <input [(ngModel)]="game.location" >
+                  <input [(ngModel)]="game.buyIn" >
+                  <input [(ngModel)]="game.prize" >
+                  <br/>
+                  <button (click)="updated.emit(game)">Save</button>
+                  <button (click)="onCancelClicked()">Cancel</button>
+              </div>     
 
-`,
-  providers: [GameService]
+
+          </div>
+      </div>
+`
 })
-export class SessionDetailsComponent implements OnInit {
-  @Input() session: Game;
-  //@Input('game') _game: Game;
+export class GameDetailsComponent implements OnInit {
+  @Input('game') _game: Game;
 
-  private selectedGame: Game;
-  constructor(private sessionService: GameService) { }
+  @Output() deleted: EventEmitter<Game> = new EventEmitter();
+  @Output() updated: EventEmitter<Game> = new EventEmitter();
 
-  // Every time the "game" input is changed, we copy it locally (and keep the original name to display)
-  // set game(value: Game) {
-  //    if(value)
-  //        this.selectedGame = Object.assign({}, value);
-  // }
+  isUpdateMode: boolean = false;
+  originalGame: Game;
+  game: Game;
 
-  deleteSession(session: Game): void {
-    this.sessionService.deleteSession(session);
-    delete this.session;
+  constructor() {
+    const a =0;
   }
 
-  ngOnInit() {
+  onCancelClicked(): void {
+    this.game = Object.assign({}, this._game);
+    this.isUpdateMode = false;
+  }
+
+  ngOnInit(): void {
+    this.game = Object.assign({}, this._game);
+    this.originalGame = Object.assign({}, this._game);
+
+    //this.game = Object.assign({}, this._game);
   }
 
 }

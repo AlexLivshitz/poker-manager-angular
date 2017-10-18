@@ -9,43 +9,25 @@ import { AppState } from "../../models/app-state";
   selector: 'games-list',
   template: `
       <div>
-          <!--<add-session></add-session>-->
           <ul>
-              <!--<session-item  *ngFor="let session of sessions" [session] = session></session-item>   -->
-              <!--<br>-->
-              <game-item *ngFor="let game of games"
-                         [game]="game"                         
-                         (click)="selected.emit(game)">
+              <game-item *ngFor="let game of gamesList"
+                         [game]="game" 
+                         [selectedGame]="selectedGame"
+                         [showGameDetails]="showGameDetails"
+                         (selected)="selected.emit($event)"
+                         (deleted)="deleted.emit($event)"
+                         (updated)="updated.emit($event)"   >
               </game-item>
           </ul>
       </div>
-  `,
-  providers: [GameService]
+  `
 })
-export class GamesListComponent implements OnInit {
-  private sessions : Game[];
-  private selectedSession : Game;
-  private showDetailsFlag: boolean = false;
-
-  @Input() games: Game[];
+export class GamesListComponent {
+  @Input() gamesList: Game[];
   @Input() selectedGame: Game;
+  @Input() showGameDetails: boolean;
 
-  @Output() selected: EventEmitter<any> = new EventEmitter();
-
-  selectedGame$: Observable<Game>;
-
-
-  constructor(private sessionService: GameService, private store: Store<AppState>) {
-    // this.selectedGame$ = store.select("selectedGame");
-  }
-
-  getSessions(): void {
-    // this.sessionService.getSessions().then(sessions => {
-    //   this.sessions = sessions});
-  }
-
-  ngOnInit() {
-    this.getSessions();
-  }
-
+  @Output() selected: EventEmitter<Game> = new EventEmitter();
+  @Output() deleted: EventEmitter<Game> = new EventEmitter();
+  @Output() updated: EventEmitter<Game> = new EventEmitter();
 }

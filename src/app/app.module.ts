@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
-import { gamesListReducer } from './reducers/game-list.reducer'
-import { selectedGameReducer } from './reducers/selected-game.reducer'
+import { gamesListState } from './reducers/game-list.reducer'
+import { selectedGame } from './reducers/selected-game.reducer'
 
 
 import { AppComponent } from './components/app.component';
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { AddGameComponent } from './components/add-game/add-game.component';
-import { SessionDetailsComponent } from './components/game-details/game-details.component';
+import { GameDetailsComponent } from './components/game-details/game-details.component';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { GameItemComponent } from './components/game-item/game-item.component';
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
@@ -21,7 +21,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
     AppComponent,
     GamesListComponent,
     AddGameComponent,
-    SessionDetailsComponent,
+    GameDetailsComponent,
     ReversePipe,
     GameItemComponent
   ],
@@ -29,7 +29,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
     BrowserModule,
     FormsModule,
     HttpModule,
-    StoreModule.provideStore({gamesList: gamesListReducer, selectedGame: selectedGameReducer}),
+    StoreModule.provideStore({gamesListState}),
     StoreDevtoolsModule.instrumentOnlyWithExtension([]),
   ],
   providers: [],

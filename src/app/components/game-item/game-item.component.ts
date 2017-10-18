@@ -1,44 +1,33 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {Game} from "../../models/game";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../models/app-state";
 
 @Component({
   selector: 'game-item',
   template:`
- <div class="session-item accordion"  [ngClass]="{active: showDetails(session)}">
-    <!--<span>{{session.location}}</span>&nbsp;{{session.buyIn}}&nbsp;{{session.prize}}-->
-    <!--<span>{{session.location}}</span>&nbsp;{{session.buyIn}}&nbsp;{{session.prize}}-->
+ <div class="session-item accordion" (click)="selected.emit(game)" [ngClass]="{active: showCurrentGameDetails()}" >    
     <span>{{game.location}}</span>&nbsp;{{game.buyIn}}&nbsp;{{game.prize}}
   </div>
-  <div *ngIf="showDetails(session)">
-    <session-details [session]="selectedSession"></session-details>
+  <div *ngIf="showCurrentGameDetails()">
+    <game-details [game]="selectedGame"
+                  (updated)="updated.emit($event)"
+                  (deleted)="deleted.emit($event)">        
+    </game-details>
   </div>  
 `
 
 })
-export class GameItemComponent implements OnInit {
-  @Input() session: Game;
+export class GameItemComponent  {
   @Input() game: Game;
- // @Input() selectedSession: Game;
-  private showDetailsFlag: boolean = false;
+  @Input() selectedGame: Game;
+  @Input() showGameDetails: boolean;
 
-  constructor() { }
+  @Output() deleted = new EventEmitter();
+  @Output() updated: EventEmitter<Game> = new EventEmitter();
+  @Output() selected: EventEmitter<Game> = new EventEmitter();
 
-
-  // onSelectSession(session: Game) : void {
-  //   if (this.selectedSession != session) {
-  //     this.selectedSession = session;
-  //     this.showDetailsFlag = true;
-  //   } else {
-  //     this.showDetailsFlag = !this.showDetailsFlag;
-  //   }
-  // }
-
-  showDetails(currentSession: Game): boolean {
-      return false;
-    //return this.selectedSession == currentSession && this.showDetailsFlag;
+  showCurrentGameDetails(): boolean {
+      return this.showGameDetails && this.game.id === this.selectedGame.id;
   }
-
-  ngOnInit() {
-  }
-
 }

@@ -105,7 +105,7 @@ div.panel {
     text-transform: uppercase;
 }
 
-.panel > button {
+.panel  button {
     height: 24px;
     width: 125px;
     margin: 6px;

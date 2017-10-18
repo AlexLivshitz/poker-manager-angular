@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Game} from "../../models/game";
-import { GameService, GamesService } from "../../services/game.service";
+import { GamesService } from "../../services/game.service";
 
 @Component({
   selector: 'add-game',
@@ -16,14 +16,13 @@ import { GameService, GamesService } from "../../services/game.service";
       </div>
   `,
   styleUrls: [ './add-game.component.css'],
-  providers: [GameService]
 })
 export class AddGameComponent implements OnInit {
 
   private showDetails: boolean = false;
   private session: Game;
 
-  constructor(private sessionService: GameService, private gamesService: GamesService) {
+  constructor(private gamesService: GamesService) {
     this.session = new Game();
   }
 

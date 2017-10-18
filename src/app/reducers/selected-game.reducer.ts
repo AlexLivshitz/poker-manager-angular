@@ -1,7 +1,7 @@
 
 
 
-export const selectedGameReducer = (state: any = [], {type, payload}) => {
+export const selectedGame = (state: any = [], {type, payload}) => {
 	switch (type) {
 		case "SELECT_GAME":
 			return payload;
