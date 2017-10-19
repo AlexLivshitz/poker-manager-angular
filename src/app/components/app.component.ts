@@ -15,7 +15,7 @@ import { isUndefined } from "util";
   template: `
       <h1>{{title}}</h1>
       <div class="sessions-list">
-          <add-game></add-game>
+          <add-game (added)="onGameAdded($event)"></add-game>          
           <games-list [gamesList]="gamesList$ | async"
                       [selectedGame]="selectedGame$ | async"
                       [showGameDetails] = showGameDetails
@@ -40,7 +40,6 @@ export class AppComponent implements OnDestroy{
   constructor(private gamesService: GamesService, private store: Store<AppState>) {
     this.gamesList$ = store.select(getGamesList);
     this.selectedGame$ = store.select(getSelectedGame);
-    this.selectedGame$.subscribe(x=> console.log(x));
     
     this.gamesListSubscription = store.select(getGamesListState)
       .subscribe((state: GamesListState) => {
@@ -48,10 +47,13 @@ export class AppComponent implements OnDestroy{
         this.showGameDetails = state.showGameDetails;
     });
 
-    this.gamesService.loadGames();
+    this.gamesService.loadGames()
+		.map(response => ({ type: GamesListActions.LOAD_GAMES, payload: response.payload }))
+		.subscribe(action => this.store.dispatch(action))
   }
 
-  onGameSelected(game): void {
+
+  onGameSelected(game: Game): void {
     if (this.selectedGame !== undefined && this.selectedGame.id === game.id) {
       this.store.dispatch({type: GamesListActions.DESELECT_GAME});
       this.store.dispatch({ type: GamesListActions.HIDE_GAME_DETAILS });
@@ -60,12 +62,17 @@ export class AppComponent implements OnDestroy{
       this.store.dispatch({type: GamesListActions.SELECT_GAME, payload: game});
       this.store.dispatch({ type: GamesListActions.SHOW_GAME_DETAILS });
     }
+  }
 
-
+  onGameAdded(game: Game) {
+    this.gamesService.addGame(Object.assign({}, game))
+		.map((response) => ({ type: GamesListActions.ADD_GAME, payload: response.payload }))
+        .subscribe(action => this.store.dispatch(action));
   }
 
   onGameDeleted(game): void {
-      this.gamesService.deleteGame(game);
+      this.gamesService.deleteGame(game)
+        .subscribe(() => this.store.dispatch({type: GamesListActions.DELETE_GAME, payload: game}))
   }
 
   onGameUpdated(game): void {

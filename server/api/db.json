@@ -29,6 +29,22 @@
       "location": "temp location1",
       "buyIn": 51,
       "prize": 300
+    },
+    {
+      "location": "asdas",
+      "id": 10
+    },
+    {
+      "location": "asdas",
+      "id": 11
+    },
+    {
+      "location": "asd",
+      "id": 12
+    },
+    {
+      "location": "asd",
+      "id": 13
     }
   ]
 }

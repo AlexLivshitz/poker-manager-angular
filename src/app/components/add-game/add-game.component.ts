@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {Game} from "../../models/game";
 import { GamesService } from "../../services/game.service";
 
@@ -6,24 +6,25 @@ import { GamesService } from "../../services/game.service";
   selector: 'add-game',
   template: `
       <div class="add-game">
-          <button class="accordion" [ngClass]="{active: showDetails}" (click)="switchDetailsState()">Add Session</button>
+          <button class="accordion" [ngClass]="{active: showDetails}" (click)="switchDetailsState()">Add Game</button>
           <div class="panel" [ngClass]="{hidden: !showDetails}">
-              <input type="text" [(ngModel)]="session.location" placeholder="Location">
-              <input type="number" [(ngModel)]="session.buyIn" placeholder="Buy In">
-              <input type="number" [(ngModel)]="session.prize" placeholder="Prize">
-              <button (click)="addSession()">ADD</button>
+              <input type="text" [(ngModel)]="game.location" placeholder="Location">
+              <input type="number" [(ngModel)]="game.buyIn" placeholder="Buy In">
+              <input type="number" [(ngModel)]="game.prize" placeholder="Prize">
+              <button (click)="added.emit(game)">ADD</button>
           </div>
       </div>
-  `,
-  styleUrls: [ './add-game.component.css'],
+  `
 })
 export class AddGameComponent implements OnInit {
 
+  @Output() added: EventEmitter<Game> = new EventEmitter();
+
   private showDetails: boolean = false;
-  private session: Game;
+  private game: Game = new Game();
 
   constructor(private gamesService: GamesService) {
-    this.session = new Game();
+    this.game = new Game();
   }
 
   switchDetailsState(): void {
@@ -31,8 +32,7 @@ export class AddGameComponent implements OnInit {
   }
 
   addSession() : void {
-    //this.sessionService.addSession(this.session);
-    this.gamesService.addGame(Object.assign({}, this.session));
+    this.gamesService.addGame(Object.assign({}, this.game));
   }
 
   ngOnInit() {
