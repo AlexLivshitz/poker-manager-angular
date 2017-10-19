@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GameService, GamesService } from "../../services/game.service";
 import { Game } from "../../models/game";
 import { Observable } from "rxjs/Observable";
 import { Store } from "@ngrx/store";

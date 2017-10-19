@@ -48,7 +48,8 @@ export class AppComponent implements OnDestroy{
     });
 
     this.gamesService.loadGames()
-		.map(response => ({ type: GamesListActions.LOAD_GAMES, payload: response.payload }))
+        .map((response) => response.json())
+		.map(payload => ({ type: GamesListActions.LOAD_GAMES, payload: payload }))
 		.subscribe(action => this.store.dispatch(action))
   }
 
