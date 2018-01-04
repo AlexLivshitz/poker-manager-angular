@@ -1,5 +1,5 @@
 
-// The "gamesListReducer" reducer performs actions on our games list of items
+// The "gamesListReducer" reducer performs actions on our game list of items
 import { Observable } from "rxjs/Observable";
 import { Action, ActionReducer } from "@ngrx/store";
 import { AppState } from "../models/app-state";

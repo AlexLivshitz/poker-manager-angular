@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Game } from "../../models/game";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Game } from "../../../models/game";
 import { Observable } from "rxjs/Observable";
 import { Store } from "@ngrx/store";
-import { AppState } from "../../models/app-state";
+import { AppState } from "../../../models/app-state";
 
 @Component({
   selector: 'games-list',
@@ -19,7 +19,8 @@ import { AppState } from "../../models/app-state";
               </game-item>
           </ul>
       </div>
-  `
+  `,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GamesListComponent {
   @Input() gamesList: Game[];

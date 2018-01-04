@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {Game} from "../../models/game";
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {Game} from "../../../models/game";
 import { Store } from "@ngrx/store";
-import { AppState } from "../../models/app-state";
+import { AppState } from "../../../models/app-state";
 
 @Component({
   selector: 'game-item',
@@ -15,7 +15,8 @@ import { AppState } from "../../models/app-state";
                   (deleted)="deleted.emit($event)">        
     </game-details>
   </div>  
-`
+`,
+   changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class GameItemComponent  {

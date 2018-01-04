@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import {Game} from "../../models/game";
+import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {Game} from "../../../models/game";
 
 @Component({
   selector: 'game-details',
@@ -24,7 +24,9 @@ import {Game} from "../../models/game";
 
           </div>
       </div>
-`
+`,
+    changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class GameDetailsComponent implements OnInit {
   @Input('game') _game: Game;
@@ -37,7 +39,7 @@ export class GameDetailsComponent implements OnInit {
   game: Game;
 
   constructor() {
-    const a =0;
+
   }
 
   onCancelClicked(): void {

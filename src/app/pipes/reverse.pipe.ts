@@ -1,13 +1,22 @@
-import { Pipe, PipeTransform } from '@angular/core';
+
+
+import { Pipe } from "@angular/core";
 
 @Pipe({
-  name: 'reverse'
+	name: 'reverse',
+	pure: false
 })
-export class ReversePipe implements PipeTransform {
+export class ReversePipe {
+	private isReversed: boolean = false;
 
-  transform(value: any, args?: any): any {
-    if (value)
-      return value.slice().reverse();
-  }
-
+	transform (values: Array<any>): Array<any> {
+		if (values) {
+			// if(!this.isReversed) {
+				this.isReversed = true;
+				return values.reverse();
+			// } else {
+			// 	return values;
+			// }
+		}
+	}
 }

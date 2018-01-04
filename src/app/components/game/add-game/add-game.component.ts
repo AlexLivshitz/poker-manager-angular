@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {Game} from "../../models/game";
-import { GamesService } from "../../services/game.service";
+import {Game} from "../../../models/game";
+import { GamesService } from "../../../services/game.service";
 
 @Component({
   selector: 'add-game',
