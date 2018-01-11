@@ -12,8 +12,12 @@ export class GamesService {
 	constructor(private http: Http) {
 	}
 
-	getGames(): Observable<Response> {
+	getAllGames(): Observable<Response> {
 		return this.http.get(BASE_URL);
+	}
+
+	getUserGames(userId): Observable<Response> {
+		return this.http.get(`${BASE_URL}/${userId}`);
 	}
 
 	addGame(game: Game): Observable<Response> {

@@ -1,0 +1,18 @@
+:host{
+  .buy-in {
+    float: left;
+  }
+
+  .summary {
+    float: right;
+    font-weight: bolder;
+
+    &.positive {
+      color: green;
+    }
+
+    &.negative {
+      color: red;
+    }
+  }
+}

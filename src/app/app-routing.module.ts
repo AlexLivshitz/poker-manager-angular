@@ -11,6 +11,10 @@ const routes: Routes = [
 	{
 		path: 'games',
 		component: GamesPageComponent
+	},
+	{
+		path: 'games/:id',
+		component: GamesPageComponent
 	}
 ]
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { Game } from "../../../models/game";
 import { GamesService } from "../../../services/game.service";
@@ -12,15 +12,21 @@ import {
 } from "../../../reducers/game-list.reducer";
 import { Subscription } from "rxjs/Subscription";
 import { GamesListState } from "../../../models/games-list.state";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
 	selector: 'app-root',
+	styleUrls: [ './games-page.component.scss' ],
 	template: `       
         <h1>{{title}}</h1>
 		<button (click)="redirectToUser()">Users</button>
         <div class="sessions-list">
             <add-game (added)="onGameAdded($event)"></add-game>
+			<div class="headers">
+            	<span class="buy-in">Buy-in</span>
+            	<span class="prize">Prize</span>
+            	<span class="summary">Summary</span>
+			</div>
             <games-list [gamesList]="gamesList$ | async | reverse"
                         [selectedGame]="selectedGame$ | async"
                         [showGameDetails]=showGameDetails
@@ -32,16 +38,17 @@ import { Router } from "@angular/router";
 	`,
 	providers: [ GamesService ]
 })
-export class GamesPageComponent implements OnDestroy {
-	title = 'Manager';
+export class GamesPageComponent implements OnInit, OnDestroy {
+	title          = 'Manager';
 	selectedGame: Game;
 	showGameDetails: boolean;
 
 	gamesListSubscription: Subscription;
+	gameIdParameterSubscription: Subscription;
 	gamesList$: Observable<Array<Game>>;
 	selectedGame$: Observable<Game>;
 
-	constructor(private gamesService: GamesService, private store: Store<AppState>, private router: Router) {
+	constructor(private gamesService: GamesService, private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {
 		this.gamesList$    = store.select(getGamesList);
 		this.selectedGame$ = store.select(getSelectedGame);
 
@@ -50,10 +57,21 @@ export class GamesPageComponent implements OnDestroy {
 				this.selectedGame    = state.selectedGame;
 				this.showGameDetails = state.showGameDetails;
 			});
+	}
 
-		this.gamesService.getGames()
-			.map((response) => response.json())
-			.subscribe((game: Game) => this.store.dispatch({ type: GamesListActions.LOAD_GAMES, payload: game }))
+	ngOnInit(): void {
+		this.gameIdParameterSubscription = this.route.params.subscribe(params => {
+			let userId = +params['id']; // (+) converts string 'id' to a number
+			if (isNaN(userId)) {
+				this.gamesService.getAllGames()
+					.map((response) => response.json())
+					.subscribe((game: Game) => this.store.dispatch({ type: GamesListActions.LOAD_GAMES, payload: game }))
+			} else {
+				this.gamesService.getUserGames(userId)
+					.map((response) => response.json())
+					.subscribe((game: Game) => this.store.dispatch({ type: GamesListActions.LOAD_GAMES, payload: game }))
+			}
+		});
 	}
 
 
@@ -91,6 +109,7 @@ export class GamesPageComponent implements OnDestroy {
 
 	ngOnDestroy() {
 		this.gamesListSubscription.unsubscribe();
+		this.gameIdParameterSubscription.unsubscribe();
 	}
 
 

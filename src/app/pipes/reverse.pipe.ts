@@ -11,12 +11,8 @@ export class ReversePipe {
 
 	transform (values: Array<any>): Array<any> {
 		if (values) {
-			// if(!this.isReversed) {
-				this.isReversed = true;
-				return values.reverse();
-			// } else {
-			// 	return values;
-			// }
+			this.isReversed = true;
+			return values.reverse();
 		}
 	}
 }

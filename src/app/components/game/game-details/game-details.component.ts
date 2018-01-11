@@ -8,7 +8,7 @@ import {Game} from "../../../models/game";
           <div class="panel" >
               <div *ngIf="!isUpdateMode">
                   {{game.location}}  {{game.buyIn}} {{game.prize}}
-                  <br/>
+                  <!--<br/>-->
                   <button (click)="isUpdateMode=true">Update</button>
                   <button (click)="deleted.emit(game)">Delete</button>
               </div>
