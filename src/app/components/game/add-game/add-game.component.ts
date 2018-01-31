@@ -7,8 +7,7 @@ import { GamesService } from "../../../services/game.service";
   template: `
       <div class="add-game">
           <button class="accordion" [ngClass]="{active: showDetails}" (click)="switchDetailsState()">Add Game</button>
-          <div class="panel" [ngClass]="{hidden: !showDetails}">
-              <input type="text" [(ngModel)]="game.location" placeholder="Location">
+          <div class="panel" [ngClass]="{hidden: !showDetails}">             
               <input type="number" [(ngModel)]="game.buyIn" placeholder="Buy In">
               <input type="number" [(ngModel)]="game.prize" placeholder="Prize">
               <button (click)="added.emit(game)">ADD</button>

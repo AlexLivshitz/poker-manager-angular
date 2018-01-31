@@ -9,7 +9,7 @@ import { AppState } from "../../../models/app-state";
 	template: `
         <div class="session-item accordion" (click)="selected.emit(game)"
              [ngClass]="{active: showCurrentGameDetails()}">
-			<div class="headers">
+			<div class="headers">	
             	<span class="buy-in">{{game.buyIn}}</span>
           	  	<span class="prize">{{game.prize}}</span>
             	<span class="summary {{getSummaryClass()}}">{{game.prize-game.buyIn}}</span>

@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { StoreModule } from '@ngrx/store';
 import { gamesListState } from './reducers/game-list.reducer'
 import { selectedGame } from './reducers/selected-game.reducer'
 
@@ -18,6 +17,8 @@ import { GamesPageComponent } from './components/game/games-page/games-page.comp
 import { AppRoutingModule } from "./app-routing.module";
 import { UsersComponent } from './components/user/users-page.component';
 import { AddUserComponent } from './components/user/add-user/add-user.component';
+import { userState } from "./reducers/user.reducer";
+import { StoreModule } from "@ngrx/store";
 
 
 @NgModule({
@@ -26,8 +27,13 @@ import { AddUserComponent } from './components/user/add-user/add-user.component'
 		BrowserModule,
 		FormsModule,
 		HttpModule,
-		StoreModule.provideStore({ gamesListState }),
-		StoreDevtoolsModule.instrumentOnlyWithExtension([]),
+		StoreModule.forRoot({
+			gamesListState: gamesListState,
+			userState: userState
+		}),
+		// StoreModule.provideStore({ gamesListState }),
+		// StoreModule.provideStore({ userState }),
+		StoreDevtoolsModule.instrument(),
 	],
 	declarations: [
 		AppComponent,

@@ -18,8 +18,7 @@ export const GamesListActions = {
 	HIDE_GAME_DETAILS: 'HIDE_GAME_DETAILS'
 }
 
-export const gamesListState: ActionReducer<GamesListState> =
-				 (state: GamesListState = new GamesListState(), action: Action) => {
+export function  gamesListState (state: GamesListState = new GamesListState(), action: any): GamesListState {
 	switch (action.type) {
 		case GamesListActions.LOAD_GAMES:
 			return Object.assign({}, state, {gamesList: action.payload} as GamesListState);
@@ -50,7 +49,7 @@ export const gamesListState: ActionReducer<GamesListState> =
 		default:
 			return state;
 	}
-};
+}
 
 
 export const getGamesListState  = (state: AppState) => {

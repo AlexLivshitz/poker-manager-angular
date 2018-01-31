@@ -1,7 +1,7 @@
 
 import { User } from "./user";
 
-export class UsersState {
+export class UserState {
 	users: User[];
 	selectedUser: User;
 }
